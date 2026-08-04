@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Robot Brain Demystified</title>
+<meta name="description" content="Demystifying the intelligence that lets a robot perceive, think, and act.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Crect width='240' height='240' rx='52' fill='%230E1216'/%3E%3Cg fill='none' stroke='%232DE1C6' stroke-width='8' stroke-linecap='round'%3E%3Crect x='58' y='78' width='124' height='120' rx='40'/%3E%3Cline x1='120' y1='78' x2='120' y2='52'/%3E%3C/g%3E%3Ccircle cx='120' cy='44' r='9' fill='%232DE1C6'/%3E%3Cline x1='99' y1='128' x2='120' y2='162' stroke='%232A333D' stroke-width='4'/%3E%3Cline x1='141' y1='128' x2='120' y2='162' stroke='%232A333D' stroke-width='4'/%3E%3Ccircle cx='99' cy='126' r='14' fill='%234C9AFF'/%3E%3Ccircle cx='141' cy='126' r='14' fill='%23C07BFF'/%3E%3Ccircle cx='120' cy='162' r='19' fill='%232DE1C6'/%3E%3C/svg%3E">
+<meta property="og:title" content="Robot Brain Demystified">
+<meta property="og:description" content="Demystifying the intelligence that lets a robot perceive, think, and act.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://robotbraindemystified.com">
+<meta property="og:image" content="https://robotbraindemystified.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1216; --panel:#141A20; --edge:#2A333D;
+    --fg:#E8EDF3; --muted:#8B95A7; --gray:#5A6472;
+    --teal:#2DE1C6; --teald:#39C9B8; --blue:#4C9AFF; --violet:#C07BFF;
+    --amber:#FFB454; --green:#57D99A; --red:#FF6B6B;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scrollbar-gutter:stable both-edges;}
+  html,body{margin:0;background:var(--ink);color:var(--fg);
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+
+  /* faint concentric signal rings, radiating from the hero */
+  .rings{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(1200px 900px at 50% -10%, rgba(45,225,198,.06), transparent 60%);}
+
+  main{position:relative;z-index:1;max-width:680px;margin:0 auto;
+    padding:1.5rem 1.4rem;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:100dvh;}
+
+  /* ---- hero ---- */
+  .logo{width:clamp(112px,26vw,150px);height:auto;display:block;
+    animation:glow 3.4s ease-in-out infinite;}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 18px rgba(45,225,198,.22));}
+    50%{filter:drop-shadow(0 0 34px rgba(45,225,198,.44));}}
+  @media (prefers-reduced-motion: reduce){.logo{animation:none;filter:drop-shadow(0 0 22px rgba(45,225,198,.28));}}
+
+  .wordmark{margin:1.1rem 0 0;line-height:.94;letter-spacing:.01em;}
+  .wordmark .rb{display:block;font-weight:700;font-size:clamp(2.3rem,9vw,3.6rem);color:var(--fg);}
+  .wordmark .dm{display:block;font-weight:500;font-style:italic;color:var(--teal);
+    font-size:clamp(1.35rem,5.4vw,2.15rem);margin-top:.15rem;letter-spacing:.06em;}
+
+  .desc{margin:1rem 0 0;font-size:clamp(1.02rem,3.3vw,1.22rem);color:var(--fg);
+    max-width:30ch;line-height:1.45;font-weight:400;}
+
+  /* perceive / think / act triad, tied to the logo's colours */
+  .triad{display:flex;gap:.5rem;align-items:center;margin:1.1rem 0 0;
+    font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  .triad b{font-weight:600;}
+  .triad .p{color:var(--blue);} .triad .t{color:var(--violet);} .triad .a{color:var(--teal);}
+  .triad .sep{color:var(--gray);}
+
+  /* ---- links ---- */
+  .links{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;
+    width:min(500px,100%);margin:1.7rem auto 0;}
+  .links a{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-width:0;
+    padding:1.05rem .6rem;background:var(--panel);border:1px solid var(--edge);
+    border-radius:15px;transition:transform .16s,border-color .16s,box-shadow .16s;}
+  .links a:hover{transform:translateY(-3px);}
+  .links a svg{width:26px;height:26px;flex:none;}
+  .links a .meta{display:flex;flex-direction:column;align-items:center;gap:.15rem;min-width:0;}
+  .links a .lbl{font-size:.86rem;font-weight:600;color:var(--fg);}
+  .links a .hd{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  @media (max-width:520px){
+    .links{grid-template-columns:1fr;max-width:360px;gap:.6rem;}
+    .links a{flex-direction:row;justify-content:flex-start;gap:.85rem;padding:.9rem 1.15rem;}
+    .links a .meta{align-items:flex-start;}
+  }
+  .links a.yt:hover{border-color:var(--red);box-shadow:0 8px 26px rgba(255,107,107,.14);}
+  .links a.ig:hover{border-color:var(--violet);box-shadow:0 8px 26px rgba(192,123,255,.14);}
+  .links a.gh:hover{border-color:var(--teal);box-shadow:0 8px 26px rgba(45,225,198,.14);}
+
+  /* ---- contact ---- */
+  .contact{margin:1.6rem 0 0;display:flex;flex-direction:column;align-items:center;gap:.45rem;}
+  .contact .k{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);}
+  .contact a{display:inline-flex;align-items:center;gap:.5rem;font-size:1.02rem;font-weight:600;
+    color:var(--teal);padding:.5rem .95rem;border:1px solid var(--edge);border-radius:11px;
+    transition:border-color .16s,background .16s;}
+  .contact a:hover{border-color:var(--teal);background:rgba(45,225,198,.07);}
+  .contact a svg{width:17px;height:17px;stroke:var(--teal);}
+
+  footer{position:relative;z-index:1;margin:1.7rem 0 0;
+    color:var(--gray);font-size:.78rem;letter-spacing:.04em;text-align:center;}
+</style>
+</head>
+<body>
+  <div class="rings"></div>
+  <main>
+    <!-- Signal Head -->
+    <img class="logo" src="logo.png" alt="Robot Brain Demystified logo">
+
+    <h1 class="wordmark"><span class="rb">ROBOT BRAIN</span><span class="dm">demystified</span></h1>
+
+    <p class="desc">Demystifying the intelligence that lets a robot perceive, think, and act.</p>
+
+    <div class="triad">
+      <span class="p"><b>Perceive</b></span><span class="sep">·</span>
+      <span class="t"><b>Think</b></span><span class="sep">·</span>
+      <span class="a"><b>Act</b></span>
+    </div>
+
+    <nav class="links">
+      <a class="yt" href="https://www.youtube.com/@robotbraindemystified" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF6B6B"><path d="M23 12s0-3.8-.5-5.6a2.9 2.9 0 0 0-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4a2.9 2.9 0 0 0-2 2C1 8.2 1 12 1 12s0 3.8.5 5.6a2.9 2.9 0 0 0 2 2C5.3 20 12 20 12 20s6.7 0 8.5-.4a2.9 2.9 0 0 0 2-2C23 15.8 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg>
+        <span class="meta"><span class="lbl">YouTube</span><span class="hd">@robotbraindemystified</span></span>
+      </a>
+      <a class="ig" href="https://www.instagram.com/robotbraindemystified/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C07BFF" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="#C07BFF" stroke="none"/></svg>
+        <span class="meta"><span class="lbl">Instagram</span><span class="hd">@robotbraindemystified</span></span>
+      </a>
+      <a class="gh" href="https://github.com/robotbraindemystified" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#2DE1C6"><path d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.4 4.7-4.6 4.9.3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+        <span class="meta"><span class="lbl">GitHub</span><span class="hd">robotbraindemystified</span></span>
+      </a>
+    </nav>
+
+    <div class="contact">
+      <span class="k">Get in touch</span>
+      <a href="mailto:contact@robotbraindemystified.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        contact@robotbraindemystified.com
+      </a>
+    </div>
+
+    <footer>© Robot Brain Demystified</footer>
+  </main>
+</body>
+</html>
